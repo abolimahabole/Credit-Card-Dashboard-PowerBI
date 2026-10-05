@@ -1,0 +1,215 @@
+table Credit_Card
+	lineageTag: 37477cca-34e9-47fe-8455-6261cdebfb67
+
+	measure 'Previous Week Revenue' = ```
+			
+			VAR currentWeek =
+			MAX(Credit_Card[Week_Num])
+			RETURN
+			CALCULATE(
+			    [Total Revenue],
+			    Credit_Card[WeekNum]
+			    
+			
+			)
+			```
+		lineageTag: 4e8e8fb2-5a55-4998-b823-81e1010e5aa8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Revenue' = ```
+			SUM(Credit_Card[Revenue])
+			
+			```
+		lineageTag: b0e08ef7-4cae-4ec2-9aae-89712238059a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Client_Num
+		dataType: int64
+		formatString: 0
+		lineageTag: 1c6b9f74-d710-40f9-9ad9-e943c2532445
+		summarizeBy: none
+		sourceColumn: Client_Num
+
+		annotation SummarizationSetBy = Automatic
+
+	column Card_Category
+		dataType: string
+		lineageTag: b9920da9-1c45-4c02-b291-249e8f0b603e
+		summarizeBy: none
+		sourceColumn: Card_Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column Annual_Fees
+		dataType: int64
+		formatString: 0
+		lineageTag: 4b3fa5c9-454c-4690-a8e8-82d29573a3e2
+		summarizeBy: sum
+		sourceColumn: Annual_Fees
+
+		annotation SummarizationSetBy = Automatic
+
+	column Activation_30_Days
+		dataType: int64
+		formatString: 0
+		lineageTag: 200ba103-3661-4e15-bb14-039be445823c
+		summarizeBy: sum
+		sourceColumn: Activation_30_Days
+
+		annotation SummarizationSetBy = Automatic
+
+	column Customer_Acq_Cost
+		dataType: int64
+		formatString: 0
+		lineageTag: 7837d16c-017f-4775-9c57-9e0dd5fc5fa1
+		summarizeBy: sum
+		sourceColumn: Customer_Acq_Cost
+
+		annotation SummarizationSetBy = Automatic
+
+	column Week_Start_Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: af9cd22f-b56d-49f3-8ded-bb2c1c086eb6
+		summarizeBy: none
+		sourceColumn: Week_Start_Date
+
+		variation Variation
+			isDefault
+			relationship: edfe61d3-590e-43b7-a978-c3da85c8eb36
+			defaultHierarchy: LocalDateTable_2bc6d5de-77b0-4033-9ab7-a58d36921299.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Week_Num
+		dataType: string
+		lineageTag: 4221695d-fcfc-4048-8c6e-40d6270ebb5a
+		summarizeBy: none
+		sourceColumn: Week_Num
+
+		annotation SummarizationSetBy = Automatic
+
+	column Qtr
+		dataType: string
+		lineageTag: f990ac6d-ecac-4e35-a69f-dc5b08cccd47
+		summarizeBy: none
+		sourceColumn: Qtr
+
+		annotation SummarizationSetBy = Automatic
+
+	column current_year
+		dataType: string
+		lineageTag: 21bd317e-c7e6-44ca-b6d9-a86ee0411eba
+		summarizeBy: none
+		sourceColumn: current_year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Credit_Limit
+		dataType: double
+		lineageTag: f9195f0f-e263-4130-aad7-0406e029586a
+		summarizeBy: sum
+		sourceColumn: Credit_Limit
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Total_Revolving_Bal
+		dataType: int64
+		formatString: 0
+		lineageTag: 593822a3-2ab1-4bfa-a403-09e98926dd57
+		summarizeBy: sum
+		sourceColumn: Total_Revolving_Bal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Total_Trans_Amt
+		dataType: int64
+		formatString: 0
+		lineageTag: 4588d99a-1b12-4fb9-a7dc-b33111944786
+		summarizeBy: sum
+		sourceColumn: Total_Trans_Amt
+
+		annotation SummarizationSetBy = Automatic
+
+	column Total_Trans_Vol
+		dataType: int64
+		formatString: 0
+		lineageTag: 04cbb03e-ed68-430f-8c6f-6a028e515227
+		summarizeBy: sum
+		sourceColumn: Total_Trans_Vol
+
+		annotation SummarizationSetBy = Automatic
+
+	column Avg_Utilization_Ratio
+		dataType: double
+		lineageTag: 361f0af7-46fd-422b-8cb1-b6d1f741503b
+		summarizeBy: sum
+		sourceColumn: Avg_Utilization_Ratio
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Use_Chip
+		dataType: string
+		lineageTag: c8f8561d-a311-4388-8ce3-67e008151122
+		summarizeBy: none
+		sourceColumn: Use_Chip
+
+		annotation SummarizationSetBy = Automatic
+
+	column Exp_Type
+		dataType: string
+		lineageTag: 3a82447f-775f-4beb-8310-cbdac151feaa
+		summarizeBy: none
+		sourceColumn: Exp_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Interest_Earned
+		dataType: double
+		lineageTag: 33e8e2b4-b348-497b-8bcd-7a0865ff7e4f
+		summarizeBy: sum
+		sourceColumn: Interest_Earned
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Delinquent_Acc
+		dataType: string
+		lineageTag: caac5596-2b21-4e51-9416-ba279db340bd
+		summarizeBy: none
+		sourceColumn: Delinquent_Acc
+
+		annotation SummarizationSetBy = Automatic
+
+	column Revenue = Credit_Card[Annual_Fees]+Credit_Card[Interest_Earned]+Credit_Card[Total_Trans_Amt]
+		lineageTag: ebe8328a-6894-4d52-9b88-9ae4308a7c2b
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column WeekNum = WEEKNUM(Credit_Card[Week_Start_Date],2)
+		formatString: 0
+		lineageTag: 63583744-9c60-4ea4-b09f-05d810a0e985
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Credit_Card = m
+		mode: import
+		source =
+				let
+				    Source = MySQL.Database("127.0.0.1", "credit_card_project", [ReturnSingleDatabase=true, Query="select * from cc_info#(lf)"])
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+

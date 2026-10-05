@@ -1,0 +1,185 @@
+table Customers
+	lineageTag: 39880ad5-95b8-4251-92fb-ac19ec42ec89
+
+	measure 'Revenue Per Customers' = DIVIDE(Credit_Card[Total Revenue],DISTINCTCOUNT(Credit_Card[Client_Num]))
+		lineageTag: 7d1325cd-a990-4697-84ef-6c7783b8332a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Total_Customers = DISTINCTCOUNT(Customers[Client_Num])
+		formatString: 0
+		lineageTag: 6acb2187-186e-4cb2-8a90-6b02886b94b2
+
+	measure 'Top 10 Customer Revenue' =
+			
+			CALCULATE([Total Revenue],TOPN(10,
+			VALUES(Customers[Client_Num]),
+			[Total Revenue],
+			DESC))
+		lineageTag: c567874b-08fd-480e-8b54-09d3790ae6a9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Client_Num
+		dataType: int64
+		formatString: 0
+		lineageTag: 9fca6c3c-1a18-4d0f-be67-fc6780bfaa01
+		summarizeBy: none
+		sourceColumn: Client_Num
+
+		annotation SummarizationSetBy = Automatic
+
+	column Customer_Age
+		dataType: int64
+		formatString: 0
+		lineageTag: 9826f9fc-cc98-438c-bab3-b03203bb8e72
+		summarizeBy: none
+		sourceColumn: Customer_Age
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		lineageTag: 689ed5c6-34d3-4b72-aa54-2fbfe26c463c
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column Dependent_Count
+		dataType: int64
+		formatString: 0
+		lineageTag: 56c3d15c-a18c-4651-a50d-fa9282822984
+		summarizeBy: none
+		sourceColumn: Dependent_Count
+
+		annotation SummarizationSetBy = Automatic
+
+	column Education_Level
+		dataType: string
+		lineageTag: 43384810-2e0d-47d9-8114-9a2362abf1d6
+		summarizeBy: none
+		sourceColumn: Education_Level
+
+		annotation SummarizationSetBy = Automatic
+
+	column Marital_Status
+		dataType: string
+		lineageTag: 6d4455eb-2eb9-46c6-8975-b6e754ab6044
+		summarizeBy: none
+		sourceColumn: Marital_Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column state_cd
+		dataType: string
+		lineageTag: e54d6faf-4fa7-45df-8e7a-32398496b7fd
+		summarizeBy: none
+		sourceColumn: state_cd
+
+		annotation SummarizationSetBy = Automatic
+
+	column Zipcode
+		dataType: string
+		lineageTag: d270bff6-25c7-4cea-87aa-4e2090c3672d
+		summarizeBy: none
+		sourceColumn: Zipcode
+
+		annotation SummarizationSetBy = Automatic
+
+	column Car_Owner
+		dataType: string
+		lineageTag: 025bd3db-7cd1-44ee-82c9-da246c99cf6b
+		summarizeBy: none
+		sourceColumn: Car_Owner
+
+		annotation SummarizationSetBy = Automatic
+
+	column House_Owner
+		dataType: string
+		lineageTag: bdb9474d-9aa3-4a77-b40c-e4a003cae929
+		summarizeBy: none
+		sourceColumn: House_Owner
+
+		annotation SummarizationSetBy = Automatic
+
+	column Personal_loan
+		dataType: string
+		lineageTag: 7b5a40b0-3c75-4ac9-b4db-8b486c0b7235
+		summarizeBy: none
+		sourceColumn: Personal_loan
+
+		annotation SummarizationSetBy = Automatic
+
+	column contact
+		dataType: string
+		lineageTag: 408531cc-8a3c-499f-83df-a999a4beefa8
+		summarizeBy: none
+		sourceColumn: contact
+
+		annotation SummarizationSetBy = Automatic
+
+	column Customer_Job
+		dataType: string
+		lineageTag: c7a4a6fc-49d1-4961-894c-5ef663dd86ac
+		summarizeBy: none
+		sourceColumn: Customer_Job
+
+		annotation SummarizationSetBy = Automatic
+
+	column Income
+		dataType: int64
+		formatString: 0
+		lineageTag: 4c41adb3-1b26-48cc-aa89-788f5d1d4a97
+		summarizeBy: none
+		sourceColumn: Income
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cust_Satisfaction_Score
+		dataType: int64
+		formatString: 0
+		lineageTag: 90b15548-121b-4ce7-9944-796eaacbb043
+		summarizeBy: none
+		sourceColumn: Cust_Satisfaction_Score
+
+		annotation SummarizationSetBy = Automatic
+
+	column Age_Group = ```
+			SWITCH(TRUE(),
+			Customers[Customer_Age]<30,"20-30",
+			Customers[Customer_Age]>=30 && Customers[Customer_Age]<40,"30-40",
+			Customers[Customer_Age]>=40 && Customers[Customer_Age]<50,"40-50",
+			Customers[Customer_Age]>=50 && Customers[Customer_Age]<60,"50-60",
+			Customers[Customer_Age]>=60,"60+",
+			"Unknown"
+			)
+			
+			```
+		lineageTag: deca7a18-3237-4a01-b440-12f23fe53472
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Income_Group =
+			SWITCH(TRUE(),
+			Customers[Income]<35000,"Low",
+			Customers[Income]>=35000 && Customers[Income]<70000,"Medium",
+			Customers[Income]>=70000,"High",
+			"Unknown"
+			)
+		lineageTag: d35cc3bb-c968-441b-8f75-3cfbdd30df5d
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Customers = m
+		mode: import
+		source =
+				let
+				    Source = MySQL.Database("127.0.0.1", "credit_card_project", [ReturnSingleDatabase=true, Query="select * from cust_info"])
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+

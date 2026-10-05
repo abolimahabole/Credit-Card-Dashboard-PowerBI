@@ -1,0 +1,9 @@
+relationship edfe61d3-590e-43b7-a978-c3da85c8eb36
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Credit_Card.Week_Start_Date
+	toColumn: LocalDateTable_2bc6d5de-77b0-4033-9ab7-a58d36921299.Date
+
+relationship AutoDetected_8daf39dc-2ee1-4502-902f-7f5102024a20
+	fromColumn: Credit_Card.Client_Num
+	toColumn: Customers.Client_Num
+
